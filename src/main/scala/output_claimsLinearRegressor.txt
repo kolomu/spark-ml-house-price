@@ -1,0 +1,53 @@
+Building ML pipeline
+Reading data from /home/kev/dev/data/insurance/train.csv file
+Preparing data for training model
+Null values exist in the DataFrame
+Preparing K-fold Cross Validation and Grid Search: Model tuning
+Training model with Linear Regression algorithm
+Evaluating model on train and validation set and calculating RMSE
+
+=====================================================================
+Param trainSample: 1.0
+Param testSample: 1.0
+TrainingData count: 141128
+ValidationData count: 47190
+TestData count: 125546
+=====================================================================
+Param maxIter = 1000
+Param numFolds = 10
+=====================================================================
+Training data MSE = 4590788.629483062
+Training data RMSE = 2142.612571017696
+Training data R-squared = -0.17378883581994442
+Training data MAE = 1361.1751341268125
+Training data Explained variance = 8501122.072763553
+=====================================================================
+Validation data MSE = 4447933.061586407
+Validation data RMSE = 2109.0123426823293
+Validation data R-squared = -0.1448230133249162
+Validation data MAE = 1349.206493694854
+Validation data Explained variance = 8231781.165376017
+CV params explained: estimator: estimator for selection (current: pipeline_f377eb611f55)
+estimatorParamMaps: param maps for the estimator (current: [Lorg.apache.spark.ml.param.ParamMap;@47e538bd)
+evaluator: evaluator used to select hyper-parameters that maximize the validated metric (current: RegressionEvaluator: uid=regEval_cb6ce19b25f1, metricName=rmse, throughOrigin=false)
+foldCol: the column name of user specified fold number (default: )
+numFolds: number of folds for cross validation (>= 2) (default: 3, current: 10)
+seed: random seed (default: -1191137437)
+GBT params explained: aggregationDepth: suggested depth for treeAggregate (>= 2) (default: 2)
+elasticNetParam: the ElasticNet mixing parameter, in range [0, 1]. For alpha = 0, the penalty is an L2 penalty. For alpha = 1, it is an L1 penalty (default: 0.0, current: 0.001)
+epsilon: The shape parameter to control the amount of robustness. Must be > 1.0. (default: 1.35)
+featuresCol: features column name (default: features, current: features)
+fitIntercept: whether to fit an intercept term (default: true)
+labelCol: label column name (default: label, current: label)
+loss: The loss function to be optimized. Supported options: squaredError, huber. (Default squaredError) (default: squaredError)
+maxBlockSizeInMB: Maximum memory in MB for stacking input data into blocks. Data is stacked within partitions. If more than remaining data size in a partition then it is adjusted to the data size. Default 0.0 represents choosing optimal value, depends on specific algorithm. Must be >= 0. (default: 0.0)
+maxIter: maximum number of iterations (>= 0) (default: 100, current: 1000)
+predictionCol: prediction column name (default: prediction)
+regParam: regularization parameter (>= 0) (default: 0.0, current: 0.001)
+solver: The solver algorithm for optimization. Supported options: auto, normal, l-bfgs. (Default auto) (default: auto)
+standardization: whether to standardize the training features before fitting the model (default: true)
+tol: the convergence tolerance for iterative algorithms (>= 0) (default: 1.0E-6, current: 1.0E-6)
+weightCol: weight column name. If this is not set or empty, we treat all instance weights as 1.0 (undefined)
+=====================================================================
+
+Run prediction on the test set
