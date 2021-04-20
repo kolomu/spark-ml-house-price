@@ -61,27 +61,13 @@ object HousePriceLinearRegression {
       // important to rename loss to label for MLLib
       .withColumnRenamed("SalePrice", "label")
       .na.drop() // drop rows which don't have sale price
-    /*
-  * Sometimes, you might just want to sample some random records from your DataFrame.
-  * You can do this by using the sample method on a DataFrame, which makes it possible
-  * for you to specify a fraction of rows to extract from a DataFrame and whether you’d
-  * like to sample with or without replacement: */
     .sample(false, 1.0)
 
-
     val randomSeed = 42
-    /** Random splits can be helpful when you need to break up your DataFrame into a random
-     * “splits” of the original DataFrame. This is often used with machine learning algorithms
-     * to create training,validation, and test sets. */
+
     val dataSplits = data.randomSplit(Array(0.8, 0.2), randomSeed)
     val (trainingData, validationData) = (dataSplits(0), dataSplits(1))
     val testData = testInput.sample(false, 1.0).cache
-    // cache the new data
-    /** We chose not to in order to demonstrate a use case for caching the data.
-     * Instead, we’re going to perform some hyper-parameter tuning on the model because we do
-     * not want to repeat the exact same transformations over and over again.
-     * This will put a copy of the intermediately transformed dataset into memory,
-     * allowing us to repeatedly access it at much lower cost than running the entire pipeline again. */
     trainingData.cache()
     validationData.cache()
 
