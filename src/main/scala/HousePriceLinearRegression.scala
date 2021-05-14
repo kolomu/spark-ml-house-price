@@ -15,15 +15,12 @@ object HousePriceLinearRegression {
     val spark = SparkSession
       .builder
       .master("local[*]")
-      // store the table data and metadata in directory
-      .config("spark.sql.warehouse.dir", "/home/kev/dev/warehouse")
       .appName(s"HousePriceLinearRegression")
       .getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
 
-    // preprocessing and feature engineering
-    val train = "/home/kev/dev/data/houseprice/train.csv"
-    val test = "/home/kev/dev/data/houseprice/test.csv"
+    val train = getClass.getResource("/train.csv").getPath
+    val test = getClass.getResource("/test.csv").getPath
 
     println(s"Reading ${train}")
     val trainInput = spark.read
@@ -110,6 +107,12 @@ object HousePriceLinearRegression {
     val stages = Array(string_indexer, encoder, vectorAssembler, model)
     val pipeline = new Pipeline().setStages(stages)
 
+    val pipelineModel = pipeline.fit(trainingData)
+    val ppML_df = pipelineModel.transform(testData)
+
+    println("Showing Pipeline Model: ")
+    ppML_df.show(2)
+
     println("Using K-Fold cross validation for model tuning")
     val numFolds = 3
     val MaxIter: Seq[Int] = Seq(1000)
@@ -134,7 +137,7 @@ object HousePriceLinearRegression {
     val cvModel = cv.fit(trainingData)
 
     println("saving the model...")
-    cvModel.write.overwrite().save("model/LR_model")
+    //cvModel.write.overwrite().save("model/LR_model")
 
     // load the model back:
     // val sameCV = CrossValidatorModel.load("model/LR_model")
